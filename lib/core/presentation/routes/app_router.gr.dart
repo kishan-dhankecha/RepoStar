@@ -15,8 +15,9 @@ import 'package:flutter/material.dart' as _i6;
 
 import '../../../auth/presentation/authorization_page.dart' as _i3;
 import '../../../auth/presentation/sign_in_page.dart' as _i2;
+import '../../../github/repos/starred_repo/presentation/starred_repo_page.dart'
+    as _i4;
 import '../../../splash/presentation/splash_page.dart' as _i1;
-import '../../../starred_repo/presentation/starred_repo_page.dart' as _i4;
 
 class AppRouter extends _i5.RootStackRouter {
   AppRouter([_i6.GlobalKey<_i6.NavigatorState>? navigatorKey])
