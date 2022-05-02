@@ -38,7 +38,7 @@ class GithubAuthenticator {
     'http://localhost:3000/callback',
   );
   static final revocationEndpoint = Uri.parse(
-    'https://api.github.com/application/$clientId/token',
+    'https://api.github.com/applications/$clientId/token',
   );
 
   Future<Credentials?> getSignedInCredentials() async {
@@ -91,7 +91,6 @@ class GithubAuthenticator {
 
   Future<Either<AuthFailure, Unit>> signOut() async {
     final accessToken = (await _credentialStorage.read())?.accessToken;
-
     final user = stringToBase64.encode("$clientId:$clientSecret");
     try {
       try {
@@ -99,7 +98,7 @@ class GithubAuthenticator {
           revocationEndpoint,
           data: {'access_token': accessToken},
           options: Options(
-            headers: {'Authorization': 'basic $user'},
+            headers: {'Authorization': 'Basic $user'},
           ),
         );
       } on DioError catch (e) {
