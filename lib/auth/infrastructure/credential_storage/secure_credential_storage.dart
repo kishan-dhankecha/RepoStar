@@ -9,13 +9,11 @@ class SecureCredentialStorage implements CredentialStorage {
 
   static const _key = "oauth2_cred";
 
-  late Credentials? _cachedCredentials;
+  Credentials? _cachedCredentials;
 
   @override
   Future<Credentials?> read() async {
-    if (_cachedCredentials != null) {
-      return _cachedCredentials;
-    }
+    if (_cachedCredentials != null) return _cachedCredentials;
     final json = await _storage.read(key: _key);
     if (json == null) {
       return null;

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart' show Dio, Options, DioError;
 import 'package:flutter/services.dart';
@@ -7,7 +9,6 @@ import 'package:repostar/auth/domain/auth_failure.dart';
 import 'package:repostar/auth/infrastructure/credential_storage/credential_storage.dart';
 import 'package:repostar/core/infrastructure/dio_extension.dart';
 import 'package:repostar/core/shared/encoder.dart';
-import 'package:repostar/core/shared/log.dart';
 
 class GithubOAuthHttpClient extends http.BaseClient {
   final httpClient = http.Client();
