@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart' show Dio, Options, DioError;
 import 'package:flutter/services.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart';
 import 'package:repostar/auth/domain/auth_failure.dart';
@@ -90,9 +91,9 @@ class GithubAuthenticator {
   }
 
   Future<Either<AuthFailure, Unit>> signOut() async {
-    final accessToken = (await _credentialStorage.read())?.accessToken;
-    final user = stringToBase64.encode("$clientId:$clientSecret");
     try {
+      final accessToken = (await _credentialStorage.read())?.accessToken;
+      final user = stringToBase64.encode("$clientId:$clientSecret");
       try {
         await _dio.deleteUri(
           revocationEndpoint,
@@ -108,6 +109,14 @@ class GithubAuthenticator {
           rethrow;
         }
       }
+      return clearCredentialsStorage();
+    } on PlatformException {
+      return left(const AuthFailure.storage());
+    }
+  }
+
+  Future<Either<AuthFailure, Unit>> clearCredentialsStorage() async {
+    try {
       await _credentialStorage.clear();
       return right(unit);
     } on PlatformException {

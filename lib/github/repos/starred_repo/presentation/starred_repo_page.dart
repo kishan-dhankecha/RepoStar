@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:repostar/auth/shared/provider.dart';
+import 'package:repostar/auth/shared/providers.dart';
 
 class StarredRepoPage extends ConsumerWidget {
   const StarredRepoPage({Key? key}) : super(key: key);
