@@ -1,3 +1,6 @@
+# Sensitive Files
+.env
+
 # Miscellaneous
 *.class
 *.log

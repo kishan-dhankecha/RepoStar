@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart' show Dio, Options, DioError;
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart';
 import 'package:repostar/auth/domain/auth_failure.dart';
@@ -25,9 +26,11 @@ class GithubAuthenticator {
 
   GithubAuthenticator(this._credentialStorage, this._dio);
 
-  static const clientId = '55ac2e6ac31d37e51676';
-  static const clientSecret = 'f47f43f023d3d3e91887046a379bd2855c22d129';
+  static final clientId = dotenv.env['CLIENT_ID'] ?? '';
+  static final clientSecret = dotenv.env['CLIENT_SECRET'] ?? '';
+
   static const scopes = ['read:user', 'repo'];
+
   static final authEndpoint = Uri.parse(
     'https://github.com/login/oauth/authorize',
   );

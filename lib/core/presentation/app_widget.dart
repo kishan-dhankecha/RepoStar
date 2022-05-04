@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:repostar/auth/application/auth_notifier.dart';
 import 'package:repostar/auth/shared/providers.dart';
@@ -7,6 +8,7 @@ import 'package:repostar/core/presentation/routes/app_router.gr.dart';
 import 'package:repostar/core/shared/providers.dart';
 
 final initializationProvider = FutureProvider((ref) async {
+  await dotenv.load();
   await ref.read(sembastProvider).init();
   ref.read(dioProvider)
     ..interceptors.add(ref.read(oauth2InterceptorProvider))
