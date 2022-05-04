@@ -39,7 +39,7 @@ class _PaginatedReposListViewState extends PaginatedReposListViewState {
               context,
             );
           }
-          canLoadNextPage = _.isNextPageAvailable;
+          canLoadNextPage = _.hasNextPage;
           return null;
         },
       ),

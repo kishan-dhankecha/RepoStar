@@ -20,23 +20,23 @@ class StarredReposRepository {
       final remotePageItems = await _remoteService.getStarredReposPage(page);
       return right(
         await remotePageItems.when(
-          noConnection: (maxPage) async {
+          noConnection: () async {
             return Fresh.no(
               await _localService.getPage(page).then((_) => _.toDomain()),
-              isNextPageAvailable: page < maxPage,
+              hasNextPage: page < (await _localService.getLocalPageCount()),
             );
           },
           notModified: (maxPage) async {
             return Fresh.yes(
               await _localService.getPage(page).then((_) => _.toDomain()),
-              isNextPageAvailable: page < maxPage,
+              hasNextPage: page < maxPage,
             );
           },
           withNewData: (data, maxPage) async {
             await _localService.upsertPage(data, page);
             return Fresh.yes(
               data.toDomain(),
-              isNextPageAvailable: page < maxPage,
+              hasNextPage: page < maxPage,
             );
           },
         ),

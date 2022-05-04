@@ -24,7 +24,7 @@ class StarredReposState with _$StarredReposState {
   ) = _LoadFailure;
   const factory StarredReposState.loadSuccess(
     Fresh<List<GithubRepo>> repos, {
-    required bool isNextPageAvailable,
+    required bool hasNextPage,
   }) = _LoadSuccess;
 }
 
@@ -49,7 +49,7 @@ class StarredReposNotifier extends StateNotifier<StarredReposState> {
         _page++;
         return StarredReposState.loadSuccess(
           r.copyWith(entity: [...state.repos.entity, ...r.entity]),
-          isNextPageAvailable: r.isNextPageAvailable ?? false,
+          hasNextPage: r.hasNextPage ?? false,
         );
       },
     );

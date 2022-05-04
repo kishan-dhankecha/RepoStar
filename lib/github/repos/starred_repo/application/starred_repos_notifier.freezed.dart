@@ -25,8 +25,7 @@ mixin _$StarredReposState {
     required TResult Function(
             Fresh<List<GithubRepo>> repos, GithubFailure failure)
         loadFailure,
-    required TResult Function(
-            Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)
+    required TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)
         loadSuccess,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,7 +36,7 @@ mixin _$StarredReposState {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
   }) =>
       throw _privateConstructorUsedError;
@@ -48,7 +47,7 @@ mixin _$StarredReposState {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
     required TResult orElse(),
   }) =>
@@ -196,8 +195,7 @@ class _$_Initial extends _Initial {
     required TResult Function(
             Fresh<List<GithubRepo>> repos, GithubFailure failure)
         loadFailure,
-    required TResult Function(
-            Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)
+    required TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)
         loadSuccess,
   }) {
     return initial(repos);
@@ -211,7 +209,7 @@ class _$_Initial extends _Initial {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
   }) {
     return initial?.call(repos);
@@ -225,7 +223,7 @@ class _$_Initial extends _Initial {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
     required TResult orElse(),
   }) {
@@ -372,8 +370,7 @@ class _$_LoadInProgress extends _LoadInProgress {
     required TResult Function(
             Fresh<List<GithubRepo>> repos, GithubFailure failure)
         loadFailure,
-    required TResult Function(
-            Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)
+    required TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)
         loadSuccess,
   }) {
     return loadInProgress(repos, itemsPerPage);
@@ -387,7 +384,7 @@ class _$_LoadInProgress extends _LoadInProgress {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
   }) {
     return loadInProgress?.call(repos, itemsPerPage);
@@ -401,7 +398,7 @@ class _$_LoadInProgress extends _LoadInProgress {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
     required TResult orElse(),
   }) {
@@ -558,8 +555,7 @@ class _$_LoadFailure extends _LoadFailure {
     required TResult Function(
             Fresh<List<GithubRepo>> repos, GithubFailure failure)
         loadFailure,
-    required TResult Function(
-            Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)
+    required TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)
         loadSuccess,
   }) {
     return loadFailure(repos, failure);
@@ -573,7 +569,7 @@ class _$_LoadFailure extends _LoadFailure {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
   }) {
     return loadFailure?.call(repos, failure);
@@ -587,7 +583,7 @@ class _$_LoadFailure extends _LoadFailure {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
     required TResult orElse(),
   }) {
@@ -657,7 +653,7 @@ abstract class _$LoadSuccessCopyWith<$Res>
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
   @override
-  $Res call({Fresh<List<GithubRepo>> repos, bool isNextPageAvailable});
+  $Res call({Fresh<List<GithubRepo>> repos, bool hasNextPage});
 
   @override
   $FreshCopyWith<List<GithubRepo>, $Res> get repos;
@@ -677,16 +673,16 @@ class __$LoadSuccessCopyWithImpl<$Res>
   @override
   $Res call({
     Object? repos = freezed,
-    Object? isNextPageAvailable = freezed,
+    Object? hasNextPage = freezed,
   }) {
     return _then(_LoadSuccess(
       repos == freezed
           ? _value.repos
           : repos // ignore: cast_nullable_to_non_nullable
               as Fresh<List<GithubRepo>>,
-      isNextPageAvailable: isNextPageAvailable == freezed
-          ? _value.isNextPageAvailable
-          : isNextPageAvailable // ignore: cast_nullable_to_non_nullable
+      hasNextPage: hasNextPage == freezed
+          ? _value.hasNextPage
+          : hasNextPage // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -695,17 +691,16 @@ class __$LoadSuccessCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadSuccess extends _LoadSuccess {
-  const _$_LoadSuccess(this.repos, {required this.isNextPageAvailable})
-      : super._();
+  const _$_LoadSuccess(this.repos, {required this.hasNextPage}) : super._();
 
   @override
   final Fresh<List<GithubRepo>> repos;
   @override
-  final bool isNextPageAvailable;
+  final bool hasNextPage;
 
   @override
   String toString() {
-    return 'StarredReposState.loadSuccess(repos: $repos, isNextPageAvailable: $isNextPageAvailable)';
+    return 'StarredReposState.loadSuccess(repos: $repos, hasNextPage: $hasNextPage)';
   }
 
   @override
@@ -715,14 +710,14 @@ class _$_LoadSuccess extends _LoadSuccess {
             other is _LoadSuccess &&
             const DeepCollectionEquality().equals(other.repos, repos) &&
             const DeepCollectionEquality()
-                .equals(other.isNextPageAvailable, isNextPageAvailable));
+                .equals(other.hasNextPage, hasNextPage));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(repos),
-      const DeepCollectionEquality().hash(isNextPageAvailable));
+      const DeepCollectionEquality().hash(hasNextPage));
 
   @JsonKey(ignore: true)
   @override
@@ -738,11 +733,10 @@ class _$_LoadSuccess extends _LoadSuccess {
     required TResult Function(
             Fresh<List<GithubRepo>> repos, GithubFailure failure)
         loadFailure,
-    required TResult Function(
-            Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)
+    required TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)
         loadSuccess,
   }) {
-    return loadSuccess(repos, isNextPageAvailable);
+    return loadSuccess(repos, hasNextPage);
   }
 
   @override
@@ -753,10 +747,10 @@ class _$_LoadSuccess extends _LoadSuccess {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
   }) {
-    return loadSuccess?.call(repos, isNextPageAvailable);
+    return loadSuccess?.call(repos, hasNextPage);
   }
 
   @override
@@ -767,12 +761,12 @@ class _$_LoadSuccess extends _LoadSuccess {
         loadInProgress,
     TResult Function(Fresh<List<GithubRepo>> repos, GithubFailure failure)?
         loadFailure,
-    TResult Function(Fresh<List<GithubRepo>> repos, bool isNextPageAvailable)?
+    TResult Function(Fresh<List<GithubRepo>> repos, bool hasNextPage)?
         loadSuccess,
     required TResult orElse(),
   }) {
     if (loadSuccess != null) {
-      return loadSuccess(repos, isNextPageAvailable);
+      return loadSuccess(repos, hasNextPage);
     }
     return orElse();
   }
@@ -817,12 +811,12 @@ class _$_LoadSuccess extends _LoadSuccess {
 
 abstract class _LoadSuccess extends StarredReposState {
   const factory _LoadSuccess(final Fresh<List<GithubRepo>> repos,
-      {required final bool isNextPageAvailable}) = _$_LoadSuccess;
+      {required final bool hasNextPage}) = _$_LoadSuccess;
   const _LoadSuccess._() : super._();
 
   @override
   Fresh<List<GithubRepo>> get repos => throw _privateConstructorUsedError;
-  bool get isNextPageAvailable => throw _privateConstructorUsedError;
+  bool get hasNextPage => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$LoadSuccessCopyWith<_LoadSuccess> get copyWith =>
