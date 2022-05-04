@@ -1,4 +1,4 @@
-include: package:lint/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
 
 analyzer:
   exclude:
@@ -6,11 +6,6 @@ analyzer:
     - "**.freezed.dart"
   errors:
     invalid_annotation_target: ignore
-    depend_on_referenced_packages: ignore
-    missing_return: error
-    must_be_immutable: error
-    must_call_super: error
-    invalid_use_of_protected_member: error
-    parameter_assignments: error
-    sort_unnamed_constructors_first: ignore
-    sort_pub_dependencies: ignore
+    # missing_return: error
+    # must_be_immutable: error
+    # must_call_super: error

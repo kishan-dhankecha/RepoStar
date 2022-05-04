@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart' show Dio, Options, DioError;
 import 'package:flutter/services.dart';
-// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:oauth2/oauth2.dart';
 import 'package:repostar/auth/domain/auth_failure.dart';
