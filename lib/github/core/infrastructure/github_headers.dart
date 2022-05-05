@@ -54,7 +54,7 @@ class PaginationLink with _$PaginationLink {
 
   static int _extractPageNumber({required String url}) {
     final uriString = RegExp(
-      r'[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+~#?//=]*)',
+      r'[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)',
     ).stringMatch(url);
     return int.parse(Uri.parse(uriString!).queryParameters['page']!);
   }
