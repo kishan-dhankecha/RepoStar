@@ -7,9 +7,11 @@ import 'package:repostar/github/repos/core/presentation/failure_repo_tile.dart';
 import 'package:repostar/github/repos/core/presentation/loading_repo_tile.dart';
 import 'package:repostar/github/repos/core/presentation/repo_tile.dart';
 
+typedef PaginatedReposNotifierProvider = AutoDisposeStateNotifierProvider<
+    PaginatedReposNotifier, PaginatedReposState>;
+
 class PaginatedReposListView extends ConsumerStatefulWidget {
-  final StateNotifierProvider<PaginatedReposNotifier, PaginatedReposState>
-      paginatedReposNotifierProvider;
+  final PaginatedReposNotifierProvider paginatedReposNotifierProvider;
   final void Function() getNextPage;
   final String noResultMessage;
   const PaginatedReposListView({
@@ -47,8 +49,7 @@ class _PaginatedReposListViewState extends PaginatedReposListViewState {
               context,
             );
           }
-          canLoadNextPage = _.hasNextPage;
-          return null;
+          return canLoadNextPage = _.hasNextPage;
         },
       ),
     );

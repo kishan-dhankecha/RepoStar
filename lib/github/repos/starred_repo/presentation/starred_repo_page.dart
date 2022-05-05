@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:repostar/auth/shared/providers.dart';
+import 'package:repostar/core/presentation/routes/app_router.gr.dart';
 import 'package:repostar/github/core/shared/providers.dart';
 import 'package:repostar/github/repos/core/presentation/paginated_repos_list_view.dart';
 
@@ -16,7 +18,9 @@ class _StarredRepoPageState extends ConsumerState<StarredRepoPage> {
   @override
   void initState() {
     super.initState();
-    ref.read(starredReposNotifierProvider.notifier).getNextStarredReposPage();
+    Future.microtask(() {
+      ref.read(starredReposNotifierProvider.notifier).getNextStarredReposPage();
+    });
   }
 
   @override
@@ -28,6 +32,12 @@ class _StarredRepoPageState extends ConsumerState<StarredRepoPage> {
           IconButton(
             icon: const Icon(MdiIcons.logoutVariant),
             onPressed: ref.read(authNotifierProvider.notifier).signOut,
+          ),
+          IconButton(
+            icon: const Icon(MdiIcons.magnify),
+            onPressed: () {
+              AutoRouter.of(context).push(SearchedRepoRoute(query: 'react'));
+            },
           ),
         ],
       ),

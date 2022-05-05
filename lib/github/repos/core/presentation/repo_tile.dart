@@ -9,7 +9,7 @@ class RepoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(repo.fullName),
+      title: Text(repo.name),
       subtitle: Text(
         repo.description,
         maxLines: 1,

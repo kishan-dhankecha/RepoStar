@@ -32,8 +32,8 @@ final starredReposRepositoryProvider = Provider((ref) {
   );
 });
 
-final starredReposNotifierProvider =
-    StateNotifierProvider<StarredReposNotifier, PaginatedReposState>(
+final starredReposNotifierProvider = StateNotifierProvider.autoDispose<
+    StarredReposNotifier, PaginatedReposState>(
   (ref) {
     return StarredReposNotifier(ref.watch(starredReposRepositoryProvider));
   },
@@ -52,8 +52,8 @@ final searchedReposRepositoryProvider = Provider((ref) {
   );
 });
 
-final searchedReposNotifierProvider =
-    StateNotifierProvider<SearchedReposNotifier, PaginatedReposState>(
+final searchedReposNotifierProvider = StateNotifierProvider.autoDispose<
+    SearchedReposNotifier, PaginatedReposState>(
   (ref) {
     return SearchedReposNotifier(ref.watch(searchedReposRepositoryProvider));
   },
