@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:repostar/github/core/domain/github_failure.dart';
-import 'package:repostar/github/core/shared/providers.dart';
+import 'package:repostar/github/repos/core/presentation/paginated_repos_list_view.dart';
 
-class FailureRepoTile extends ConsumerWidget {
+class FailureRepoTile extends StatelessWidget {
   final GithubFailure _failure;
   const FailureRepoTile(
     this._failure, {
@@ -11,7 +10,7 @@ class FailureRepoTile extends ConsumerWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return ListTileTheme(
       textColor: Theme.of(context).colorScheme.onError,
       iconColor: Theme.of(context).colorScheme.onError,
@@ -31,9 +30,9 @@ class FailureRepoTile extends ConsumerWidget {
           ),
           trailing: IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: ref
-                .read(starredReposNotifierProvider.notifier)
-                .getNextStarredReposPage,
+            onPressed: context
+                .findAncestorWidgetOfExactType<PaginatedReposListView>()
+                ?.getNextPage,
           ),
         ),
       ),
