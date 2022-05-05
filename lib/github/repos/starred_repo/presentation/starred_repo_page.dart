@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:repostar/auth/shared/providers.dart';
 import 'package:repostar/github/core/shared/providers.dart';
-import 'package:repostar/github/repos/starred_repo/presentation/paginated_repos_list_view.dart';
+import 'package:repostar/github/repos/core/presentation/paginated_repos_list_view.dart';
 
 class StarredRepoPage extends ConsumerStatefulWidget {
   const StarredRepoPage({Key? key}) : super(key: key);
@@ -31,7 +31,13 @@ class _StarredRepoPageState extends ConsumerState<StarredRepoPage> {
           ),
         ],
       ),
-      body: const PaginatedReposListView(),
+      body: PaginatedReposListView(
+        paginatedReposNotifierProvider: starredReposNotifierProvider,
+        noResultMessage: "We couldn't find any starred repos in your account.",
+        getNextPage: () => ref
+            .read(starredReposNotifierProvider.notifier)
+            .getNextStarredReposPage(),
+      ),
     );
   }
 }

@@ -3,7 +3,7 @@ import 'package:repostar/core/domain/fresh.dart';
 import 'package:repostar/core/infrastructure/network_exceptions.dart';
 import 'package:repostar/github/core/domain/github_failure.dart';
 import 'package:repostar/github/core/domain/github_repo.dart';
-import 'package:repostar/github/core/infrastructure/github_repo_dto.dart';
+import 'package:repostar/github/repos/core/infrastructure/extensions.dart';
 import 'package:repostar/github/repos/starred_repo/infrastructure/starred_repos_local_service.dart';
 import 'package:repostar/github/repos/starred_repo/infrastructure/starred_repos_remote_service.dart';
 
@@ -44,11 +44,5 @@ class StarredReposRepository {
     } on RestApiException catch (e) {
       return left(GithubFailure.api(e.errorCode));
     }
-  }
-}
-
-extension on List<GithubRepoDTO> {
-  List<GithubRepo> toDomain() {
-    return map((e) => e.toDomain()).toList();
   }
 }

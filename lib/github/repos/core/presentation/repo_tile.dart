@@ -9,7 +9,7 @@ class RepoTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(repo.name),
+      title: Text(repo.fullName),
       subtitle: Text(
         repo.description,
         maxLines: 1,
@@ -30,7 +30,7 @@ class RepoTile extends StatelessWidget {
         ],
       ),
       onTap: () {
-        //TODO: Open Detail Page
+        //TODO: Open Readme Page
       },
     );
   }
