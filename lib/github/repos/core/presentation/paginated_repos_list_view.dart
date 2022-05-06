@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:repostar/core/presentation/toast.dart';
 import 'package:repostar/github/core/presentation/no_results_display.dart';
 import 'package:repostar/github/repos/core/application/paginated_repos_notifier.dart';
@@ -84,7 +85,11 @@ class _PaginatedListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final fsb = FloatingSearchBar.of(context)?.widget;
+    final unSafeArea = MediaQuery.of(context).padding.top;
+    final padding = (fsb?.height ?? 0) + unSafeArea + 8; // 8 for clean look
     return ListView.builder(
+      padding: EdgeInsets.only(top: padding),
       physics: const BouncingScrollPhysics(),
       itemCount: state.map(
         initial: (_) => 0,

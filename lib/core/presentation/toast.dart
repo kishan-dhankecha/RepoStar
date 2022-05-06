@@ -26,3 +26,28 @@ Future<void> showNoConnectionToast(String message, BuildContext context) async {
     },
   );
 }
+
+Future<bool> showSignOutConfirmation(BuildContext context) async {
+  final result = await context.showFlashDialog<bool>(
+    barrierBlur: 3,
+    barrierColor: Colors.transparent,
+    borderColor: Colors.black,
+    barrierDismissible: false,
+    transitionDuration: const Duration(milliseconds: 300),
+    title: const Text('Are you sure?'),
+    content: const Text('Do you really want to log out?'),
+    negativeActionBuilder: (context, controller, _) {
+      return TextButton(
+        child: const Text('NO'),
+        onPressed: () => controller.dismiss(false),
+      );
+    },
+    positiveActionBuilder: (context, controller, _) {
+      return TextButton(
+        child: const Text('YES'),
+        onPressed: () => controller.dismiss(true),
+      );
+    },
+  );
+  return result ?? false;
+}

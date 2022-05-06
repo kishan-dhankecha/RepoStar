@@ -1,8 +1,10 @@
-# RepoStar - GitHub Repo Viewer
+# RepoStar - GitHub Starred Repository Manager 
 
 Production-grade project developed during the Reso Coder Academy Flutter Bootcamp.
 
-It's a mobile Github repository viewer
+It's a mobile Github starred repository viewer.
+Users can see their starred repositories and also unstar them.
+Also they can search for any repositories from allover github and can star any repositories. 
 
 More info at [Reso Coder](https://resocoder.com/fdb) or at [Reso Coder Academy](https://resocoder.academy)
 
@@ -40,4 +42,4 @@ flutter packages pub run build_runner watch
 
 Create an Github OAuth App on **Github Settings|Developer settings|OAuth Apps** with <http://localhost:8080> as Homepage URL
 
-Save the CLIENT_ID and CLIENT_SECRET in a .env file (see .env.sample file as example)
+Save the `CLIENT_ID` and `CLIENT_SECRET` in a `.env` file (see `.env.sample` file as example)

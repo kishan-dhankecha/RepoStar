@@ -23,6 +23,7 @@ dependencies:
   hooks_riverpod: ^2.0.0-dev.5
   json_annotation: ^4.5.0
   material_design_icons_flutter: ^5.0.6595
+  material_floating_search_bar: ^0.3.7
   oauth2: ^2.0.0
   path: ^1.8.1
   path_provider: ^2.0.9
