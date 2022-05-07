@@ -35,7 +35,10 @@ class _StarredRepoPageState extends ConsumerState<StarredRepoPage> {
             icon: const Icon(MdiIcons.logoutVariant),
             splashRadius: 18,
             onPressed: () async {
-              final logOut = await showSignOutConfirmation(context);
+              final logOut = await showConfirmationDialog(
+                context,
+                message: "Do you really want to log out?",
+              );
               if (logOut) ref.read(authNotifierProvider.notifier).signOut();
             },
           )

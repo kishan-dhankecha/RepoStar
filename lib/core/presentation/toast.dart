@@ -32,15 +32,15 @@ Future<void> showNoConnectionToast(
   );
 }
 
-Future<bool> showSignOutConfirmation(BuildContext context) async {
+Future<bool> showConfirmationDialog(
+  BuildContext context, {
+  required String message,
+}) async {
   final result = await context.showFlashDialog<bool>(
-    barrierBlur: 3,
-    barrierColor: Colors.transparent,
-    borderColor: Colors.black,
-    barrierDismissible: false,
+    barrierColor: Theme.of(context).shadowColor.withOpacity(0.5),
     transitionDuration: const Duration(milliseconds: 300),
     title: const Text('Are you sure?'),
-    content: const Text('Do you really want to log out?'),
+    content: Text(message),
     negativeActionBuilder: (context, controller, _) {
       return TextButton(
         child: const Text('NO'),

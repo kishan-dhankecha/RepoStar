@@ -1,6 +1,10 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:repostar/core/shared/providers.dart';
 import 'package:repostar/github/core/infrastructure/github_headers_cache.dart';
+import 'package:repostar/github/readme/application/readme_notifier.dart';
+import 'package:repostar/github/readme/infrastructure/readme_local_service.dart';
+import 'package:repostar/github/readme/infrastructure/readme_remote_service.dart';
+import 'package:repostar/github/readme/infrastructure/readme_repository.dart';
 import 'package:repostar/github/repos/core/application/paginated_repos_notifier.dart';
 import 'package:repostar/github/repos/searched_repo/Infrastructure/searched_repos_remote_service.dart';
 import 'package:repostar/github/repos/searched_repo/Infrastructure/searched_repos_repository.dart';
@@ -58,3 +62,29 @@ final searchedReposNotifierProvider = StateNotifierProvider.autoDispose<
     return SearchedReposNotifier(ref.watch(searchedReposRepositoryProvider));
   },
 );
+
+final readmeLocalServiceProvider = Provider((ref) {
+  return ReadmeLocalService(
+    ref.watch(sembastProvider),
+    ref.watch(githubHeadersCacheProvider),
+  );
+});
+
+final readmeRemoteServiceProvider = Provider((ref) {
+  return ReadmeRemoteService(
+    ref.watch(dioProvider),
+    ref.watch(githubHeadersCacheProvider),
+  );
+});
+
+final readmeRepositoryProvider = Provider((ref) {
+  return ReadmeRepository(
+    ref.watch(readmeLocalServiceProvider),
+    ref.watch(readmeRemoteServiceProvider),
+  );
+});
+
+final readmeNotifierProvider =
+    StateNotifierProvider.autoDispose<ReadmeNotifier, ReadmeState>((ref) {
+  return ReadmeNotifier(ref.watch(readmeRepositoryProvider));
+});

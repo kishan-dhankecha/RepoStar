@@ -29,6 +29,7 @@ dependencies:
   path_provider: ^2.0.9
   sembast: ^3.2.0
   shimmer: ^2.0.0
+  url_launcher: ^6.1.0
   webview_flutter: ^3.0.2
 
 dev_dependencies: 
