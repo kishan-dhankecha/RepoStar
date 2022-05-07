@@ -13,7 +13,7 @@ class SearchedRepoPage extends ConsumerStatefulWidget {
   const SearchedRepoPage(this.query, {Key? key}) : super(key: key);
 
   @override
-  ConsumerState<SearchedRepoPage> createState() => _SearchedRepoPageState();
+  _SearchedRepoPageState createState() => _SearchedRepoPageState();
 }
 
 class _SearchedRepoPageState extends ConsumerState<SearchedRepoPage> {

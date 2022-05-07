@@ -23,14 +23,13 @@ class PaginatedReposListView extends ConsumerStatefulWidget {
   }) : super(key: key);
 
   @override
-  PaginatedReposListViewState createState() {
+  _PaginatedReposListViewState createState() {
     return _PaginatedReposListViewState();
   }
 }
 
-typedef PaginatedReposListViewState = ConsumerState<PaginatedReposListView>;
-
-class _PaginatedReposListViewState extends PaginatedReposListViewState {
+class _PaginatedReposListViewState
+    extends ConsumerState<PaginatedReposListView> {
   bool canLoadNextPage = false;
   bool hasAlreadyShownNoConnectionToast = false;
 

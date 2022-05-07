@@ -21,7 +21,7 @@ class SearchBar extends ConsumerStatefulWidget {
   }) : super(key: key);
 
   @override
-  ConsumerState<SearchBar> createState() => _SearchBarState();
+  _SearchBarState createState() => _SearchBarState();
 }
 
 class _SearchBarState extends ConsumerState<SearchBar> {

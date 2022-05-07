@@ -12,7 +12,7 @@ class StarredRepoPage extends ConsumerStatefulWidget {
   const StarredRepoPage({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<StarredRepoPage> createState() => _StarredRepoPageState();
+  _StarredRepoPageState createState() => _StarredRepoPageState();
 }
 
 class _StarredRepoPageState extends ConsumerState<StarredRepoPage> {
