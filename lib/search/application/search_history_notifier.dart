@@ -19,6 +19,6 @@ class SearchHistoryNotifier extends StateNotifier<AsyncValue<List<String>>> {
   Future<void> deleteSearchTerm(String term) async =>
       _repository.deleteSearchTerm(term);
 
-  Future<void> putSearchTermFirst(String term) async =>
-      _repository.putSearchTermFirst(term);
+  Future<void> replaceTermFirst(String term) async =>
+      _repository.replaceTermFirst(term);
 }

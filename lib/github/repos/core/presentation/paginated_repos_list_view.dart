@@ -82,7 +82,7 @@ class _PaginatedListView extends StatelessWidget {
   Widget build(BuildContext context) {
     final fsb = FloatingSearchBar.of(context)?.widget;
     final unSafeArea = MediaQuery.of(context).padding.top;
-    final padding = (fsb?.height ?? 0) + unSafeArea + 8; // 8 for clean look
+    final padding = (fsb?.height ?? 0) + unSafeArea;
     return ListView.builder(
       padding: EdgeInsets.only(top: padding),
       physics: const BouncingScrollPhysics(),

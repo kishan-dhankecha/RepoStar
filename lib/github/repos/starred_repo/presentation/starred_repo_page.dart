@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:repostar/auth/shared/providers.dart';
 import 'package:repostar/core/presentation/routes/app_router.gr.dart';
 import 'package:repostar/core/presentation/toast.dart';
@@ -27,15 +28,24 @@ class _StarredRepoPageState extends ConsumerState<StarredRepoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Starred Repositories'),
+        actions: [
+          IconButton(
+            icon: const Icon(MdiIcons.logoutVariant),
+            splashRadius: 18,
+            onPressed: () async {
+              final logOut = await showSignOutConfirmation(context);
+              if (logOut) ref.read(authNotifierProvider.notifier).signOut();
+            },
+          )
+        ],
+      ),
       body: SearchBar(
-        title: 'Starred Repositories',
-        hint: 'Search all repositories...',
+        title: 'Explore Github',
+        hint: 'Search repositories...',
         onSearched: (query) {
           AutoRouter.of(context).push(SearchedRepoRoute(query: query));
-        },
-        onSignedOut: () async {
-          final logOut = await showSignOutConfirmation(context);
-          if (logOut) ref.read(authNotifierProvider.notifier).signOut();
         },
         body: PaginatedReposListView(
           paginatedReposNotifierProvider: starredReposNotifierProvider,

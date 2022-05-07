@@ -32,7 +32,7 @@ class SearchHistoryRepository {
     return _deleteSearchTerm(term, _sembastDatabase.instance);
   }
 
-  Future<void> putSearchTermFirst(String term) async {
+  Future<void> replaceTermFirst(String term) async {
     await _sembastDatabase.instance.transaction((transaction) async {
       await _deleteSearchTerm(term, transaction);
       await _addSearchTerm(term, transaction);
@@ -45,7 +45,7 @@ class SearchHistoryRepository {
       finder: Finder(filter: Filter.custom((record) => record.value == term)),
     );
 
-    if (existingKey != null) return putSearchTermFirst(term);
+    if (existingKey != null) return replaceTermFirst(term);
 
     await _store.add(dbClient, term);
     final count = await _store.count(dbClient);

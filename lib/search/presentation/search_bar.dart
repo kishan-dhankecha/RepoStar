@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 import 'package:repostar/search/shared/provider.dart';
 
@@ -9,7 +7,6 @@ class SearchBar extends ConsumerStatefulWidget {
   final String title, hint;
   final Widget body;
   final void Function(String searchTerm) onSearched;
-  final Function() onSignedOut;
 
   const SearchBar({
     Key? key,
@@ -17,7 +14,6 @@ class SearchBar extends ConsumerStatefulWidget {
     required this.hint,
     required this.body,
     required this.onSearched,
-    required this.onSignedOut,
   }) : super(key: key);
 
   @override
@@ -26,12 +22,18 @@ class SearchBar extends ConsumerStatefulWidget {
 
 class _SearchBarState extends ConsumerState<SearchBar> {
   late FloatingSearchBarController _searchBarController;
-  final searchNotifier = searchHistoryNotifierProvider.notifier;
+
   @override
   void initState() {
     super.initState();
     _searchBarController = FloatingSearchBarController();
-    ref.read(searchNotifier).watchSearchTerms();
+    ref.read(searchHistoryNotifierProvider.notifier).watchSearchTerms();
+  }
+
+  @override
+  void dispose() {
+    _searchBarController.dispose();
+    super.dispose();
   }
 
   @override
@@ -39,19 +41,20 @@ class _SearchBarState extends ConsumerState<SearchBar> {
     void pushPageAndPutFirstInHistory(String query) {
       _searchBarController.close();
       widget.onSearched(query);
-      ref.read(searchNotifier).putSearchTermFirst(query);
+      ref.read(searchHistoryNotifierProvider.notifier).replaceTermFirst(query);
     }
 
     void pushPageAndAddToHistory(String query) {
       _searchBarController.close();
       widget.onSearched(query);
-      ref.read(searchNotifier).addSearchTerm(query);
+      ref.read(searchHistoryNotifierProvider.notifier).addSearchTerm(query);
     }
 
     return FloatingSearchBar(
       hint: widget.hint,
       controller: _searchBarController,
       body: FloatingSearchBarScrollNotifier(child: widget.body),
+      transition: CircularFloatingSearchBarTransition(),
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -61,32 +64,17 @@ class _SearchBarState extends ConsumerState<SearchBar> {
         ],
       ),
       automaticallyImplyBackButton: false,
-      leadingActions: [
-        if (AutoRouter.of(context).canPopSelfOrChildren)
-          IconButton(
-            icon: Icon(Icons.adaptive.arrow_back),
-            splashRadius: 18,
-            onPressed: AutoRouter.of(context).pop,
-          ),
-      ],
-      actions: [
-        FloatingSearchBarAction.searchToClear(showIfClosed: false),
-        FloatingSearchBarAction(
-          child: IconButton(
-            icon: const Icon(MdiIcons.logoutVariant),
-            splashRadius: 18,
-            onPressed: widget.onSignedOut,
-          ),
-        ),
-      ],
+      actions: [FloatingSearchBarAction.searchToClear()],
       onSubmitted: pushPageAndAddToHistory,
       onQueryChanged: (query) {
-        ref.read(searchNotifier).watchSearchTerms(filter: query);
+        ref
+            .read(searchHistoryNotifierProvider.notifier)
+            .watchSearchTerms(filter: query);
       },
       builder: (context, transition) {
         final searchHistoryState = ref.watch(searchHistoryNotifierProvider);
         return Material(
-          elevation: 4,
+          elevation: 2,
           clipBehavior: Clip.hardEdge,
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(8),
@@ -122,7 +110,9 @@ class _SearchBarState extends ConsumerState<SearchBar> {
                     trailing: IconButton(
                       icon: const Icon(Icons.clear),
                       onPressed: () {
-                        ref.read(searchNotifier).deleteSearchTerm(term);
+                        ref
+                            .read(searchHistoryNotifierProvider.notifier)
+                            .deleteSearchTerm(term);
                       },
                     ),
                     onTap: () => pushPageAndPutFirstInHistory(term),

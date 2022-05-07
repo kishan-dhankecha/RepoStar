@@ -53,7 +53,9 @@ class AppWidget extends ConsumerWidget {
     return MaterialApp.router(
       title: 'RepoStar',
       theme: ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF216E39),
+        ),
       ),
       debugShowCheckedModeBanner: false,
       routerDelegate: appRouter.delegate(),
