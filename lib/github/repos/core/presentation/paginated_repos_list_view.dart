@@ -43,11 +43,7 @@ class _PaginatedReposListViewState
         loadFailure: (_) => canLoadNextPage = false,
         loadSuccess: (_) {
           if (!_.repos.isFresh && !hasAlreadyShownNoConnectionToast) {
-            showNoConnectionToast(
-              "Couldn't reach servers.\n"
-              "Some Data may be outdated.",
-              context,
-            );
+            showNoConnectionToast(context);
           }
           return canLoadNextPage = _.hasNextPage;
         },

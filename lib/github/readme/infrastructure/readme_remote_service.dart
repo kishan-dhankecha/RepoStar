@@ -88,18 +88,15 @@ class ReadmeRemoteService {
     String fullRepoName, {
     required bool currentStatus,
   }) async {
+    final requestUri = Uri.https(
+      'api.github.com',
+      '/user/starred/$fullRepoName',
+    );
+
     try {
-      final response = await (currentStatus ? _dio.deleteUri : _dio.getUri)(
-        Uri.https(
-          "api.github.com",
-          "/user/starred/$fullRepoName",
-        ),
-        options: Options(
-          validateStatus: (status) =>
-              (status != null && status >= 200 && status < 400) ||
-              status == 404,
-        ),
-      );
+      final response = await (currentStatus
+          ? _dio.deleteUri(requestUri)
+          : _dio.putUri(requestUri));
 
       if (response.statusCode == 204) {
         return unit;
