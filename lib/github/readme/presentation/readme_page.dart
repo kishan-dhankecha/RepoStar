@@ -41,102 +41,112 @@ class _ReadmePageState extends ConsumerState<ReadmePage> {
         },
       );
     });
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            Hero(
-              tag: widget.repo.hashCode,
-              child: CircleAvatar(
-                radius: 16,
-                backgroundColor: Colors.transparent,
-                backgroundImage: CachedNetworkImageProvider(
-                  widget.repo.owner.avatar64,
+    return WillPopScope(
+      onWillPop: () async {
+        if (state.isStarSwitched) {
+          ref
+              .read(starredReposNotifierProvider.notifier)
+              .getFirstStarredReposPage();
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: [
+              Hero(
+                tag: widget.repo.hashCode,
+                child: CircleAvatar(
+                  radius: 16,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: CachedNetworkImageProvider(
+                    widget.repo.owner.avatar64,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Flexible(child: Text(widget.repo.name)),
+            ],
+          ),
+          actions: [
+            state.maybeMap(
+              loadSuccess: (state) {
+                return IconButton(
+                  onPressed: state.readme.isFresh
+                      ? () => ref
+                          .read(readmeNotifierProvider.notifier)
+                          .switchStarredStatus(state.readme.entity!)
+                      : null,
+                  icon: Icon(
+                    !state.readme.isFresh
+                        ? MdiIcons.starRemoveOutline
+                        : state.readme.entity?.starred ?? true
+                            ? Icons.star
+                            : Icons.star_border,
+                  ),
+                );
+              },
+              orElse: () => Shimmer.fromColors(
+                highlightColor: Colors.grey.shade400,
+                baseColor: Colors.grey.shade300,
+                child: IconButton(
+                  icon: const Icon(Icons.star),
+                  onPressed: null,
+                  color: Theme.of(context).iconTheme.color,
                 ),
               ),
             ),
-            const SizedBox(width: 8),
-            Flexible(child: Text(widget.repo.name)),
           ],
         ),
-        actions: [
-          state.maybeMap(
-            loadSuccess: (state) {
-              return IconButton(
-                onPressed: state.readme.isFresh
-                    ? () => ref
-                        .read(readmeNotifierProvider.notifier)
-                        .switchStarredStatus(state.readme.entity!)
-                    : null,
-                icon: Icon(
-                  !state.readme.isFresh
-                      ? MdiIcons.starRemoveOutline
-                      : state.readme.entity?.starred ?? true
-                          ? Icons.star
-                          : Icons.star_border,
-                ),
-              );
-            },
-            orElse: () => Shimmer.fromColors(
-              highlightColor: Colors.grey.shade400,
-              baseColor: Colors.grey.shade300,
-              child: IconButton(
-                icon: const Icon(Icons.star),
-                onPressed: null,
-                color: Theme.of(context).iconTheme.color,
-              ),
-            ),
+        body: state.map(
+          initial: (_) => Container(),
+          loadInProgress: (_) => const Center(
+            child: CircularProgressIndicator(),
           ),
-        ],
-      ),
-      body: state.map(
-        initial: (_) => Container(),
-        loadInProgress: (_) => const Center(
-          child: CircularProgressIndicator(),
-        ),
-        loadSuccess: (_) {
-          if (_.readme.entity == null) {
-            return const NoResultsDisplay(
-              "These are approximately all the details we could find about this repository right now.",
-            );
-          } else {
-            return WebView(
-              javascriptMode: JavascriptMode.unrestricted,
-              navigationDelegate: (navReq) async {
-                if (navReq.url.startsWith("data:")) {
-                  return NavigationDecision.navigate;
-                } else {
-                  final visit = await showConfirmationDialog(
-                    context,
-                    message: "Do you really want visit external link? "
-                        "It will open in your mobile browser.",
-                  );
-                  if (visit) {
-                    await url_launcher.launchUrl(
-                      Uri.parse(navReq.url),
-                      mode: url_launcher.LaunchMode.externalApplication,
+          loadSuccess: (_) {
+            if (_.readme.entity == null) {
+              return const NoResultsDisplay(
+                "These are approximately all the details we could find about this repository right now.",
+              );
+            } else {
+              return WebView(
+                javascriptMode: JavascriptMode.unrestricted,
+                navigationDelegate: (navReq) async {
+                  if (navReq.url.startsWith("data:")) {
+                    return NavigationDecision.navigate;
+                  } else {
+                    final visit = await showConfirmationDialog(
+                      context,
+                      message: "Do you really want visit external link? "
+                          "It will open in your mobile browser.",
                     );
+                    if (visit) {
+                      await url_launcher.launchUrl(
+                        Uri.parse(navReq.url),
+                        mode: url_launcher.LaunchMode.externalApplication,
+                      );
+                    }
+                    return NavigationDecision.prevent;
                   }
-                  return NavigationDecision.prevent;
-                }
-              },
-              initialUrl: Uri.dataFromString('''
-                <html lang="en">
-                <head>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                </head>
-                <body>${_.readme.entity!.html}</body>
-                </html>
-                $readmeCss
-                ''', mimeType: 'text/html', encoding: utf8).toString(),
+                },
+                initialUrl: Uri.dataFromString('''
+                  <html lang="en">
+                  <head>
+                      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  </head>
+                  <body>${_.readme.entity!.html}</body>
+                  </html>
+                  $readmeCss
+                  ''', mimeType: 'text/html', encoding: utf8).toString(),
+              );
+            }
+          },
+          loadFailure: (_) {
+            return Center(
+              child: Text(_.failure.toString()),
             );
-          }
-        },
-        loadFailure: (_) {
-          return Center(
-            child: Text(_.failure.toString()),
-          );
-        },
+          },
+        ),
       ),
     );
   }
