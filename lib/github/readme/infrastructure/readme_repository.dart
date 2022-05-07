@@ -51,12 +51,12 @@ class ReadmeRepository {
 
   /// Return `right(null)` if there's no internet connection
   Future<Either<GithubFailure, Unit?>> switchStarredStatus(
-    ReadmeDto readmeDto,
+    Readme readme,
   ) async {
     try {
       final actionCompleted = await _remoteService.switchStarredStatus(
-        readmeDto.fullName,
-        currentStatus: readmeDto.starred,
+        readme.fullName,
+        currentStatus: readme.starred,
       );
       return right(actionCompleted);
     } on RestApiException catch (e) {
