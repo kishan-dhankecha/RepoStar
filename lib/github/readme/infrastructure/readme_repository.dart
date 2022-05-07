@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:repostar/core/domain/fresh.dart';
 import 'package:repostar/core/infrastructure/network_exceptions.dart';
 import 'package:repostar/github/core/domain/github_failure.dart';
@@ -18,32 +19,40 @@ class ReadmeRepository {
     String fullName,
   ) async {
     try {
-      final html = await _remoteService.getReadmeHtml(fullName);
-      return right(await html.when(
-        noConnection: () async {
-          return Fresh.no(
-            await _localService.getReadme(fullName).then((dto) {
-              return dto?.toDomain();
-            }),
-          );
-        },
-        notModified: (_) async {
-          final cachedDto = await _localService.getReadme(fullName);
-          final starred = await _remoteService.getStarredStatus(fullName);
-          final updatedDto = cachedDto?.copyWith(starred: starred ?? false);
-          return Fresh.yes(updatedDto?.toDomain());
-        },
-        withNewData: (html, _) async {
-          final starred = await _remoteService.getStarredStatus(fullName);
-          final dto = ReadmeDto(
-            html: html,
-            starred: starred ?? false,
-            fullName: fullName,
-          );
-          await _localService.upsertReadme(dto);
-          return Fresh.yes(dto.toDomain());
-        },
-      ));
+      try {
+        final html = await _remoteService.getReadmeHtml(fullName);
+        return right(await html.when(
+          noConnection: () async {
+            return Fresh.no(
+              await _localService.getReadme(fullName).then((dto) {
+                return dto?.toDomain();
+              }),
+            );
+          },
+          notModified: (_) async {
+            final cachedDto = await _localService.getReadme(fullName);
+            final starred = await _remoteService.getStarredStatus(fullName);
+            final updatedDto = cachedDto?.copyWith(starred: starred ?? false);
+            return Fresh.yes(updatedDto?.toDomain());
+          },
+          withNewData: (html, _) async {
+            final starred = await _remoteService.getStarredStatus(fullName);
+            final dto = ReadmeDto(
+              html: html,
+              starred: starred ?? false,
+              fullName: fullName,
+            );
+            await _localService.upsertReadme(dto);
+            return Fresh.yes(dto.toDomain());
+          },
+        ));
+      } on DioError catch (e) {
+        if (e.response?.statusCode == 404) {
+          return right(Fresh.no(null));
+        } else {
+          rethrow;
+        }
+      }
     } on RestApiException catch (e) {
       return left(GithubFailure.api(e.errorCode));
     }
