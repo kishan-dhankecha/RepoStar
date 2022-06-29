@@ -9,12 +9,12 @@ class SearchBar extends ConsumerStatefulWidget {
   final void Function(String searchTerm) onSearched;
 
   const SearchBar({
-    Key? key,
+    super.key,
     required this.title,
     required this.hint,
     required this.body,
     required this.onSearched,
-  }) : super(key: key);
+  });
 
   @override
   _SearchBarState createState() => _SearchBarState();

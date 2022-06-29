@@ -9,10 +9,10 @@ class AuthorizationPage extends StatefulWidget {
   final void Function(Uri redirectUri) onAuthorizationCodeRedirectAttempt;
 
   const AuthorizationPage({
-    Key? key,
+    super.key,
     required this.authorizationUrl,
     required this.onAuthorizationCodeRedirectAttempt,
-  }) : super(key: key);
+  });
   @override
   _AuthorizationPageState createState() => _AuthorizationPageState();
 }

@@ -5,7 +5,7 @@ import 'package:repostar/github/repos/core/presentation/paginated_repos_list_vie
 
 class SearchedRepoPage extends ConsumerStatefulWidget {
   final String query;
-  const SearchedRepoPage(this.query, {Key? key}) : super(key: key);
+  const SearchedRepoPage(this.query, {super.key});
 
   @override
   _SearchedRepoPageState createState() => _SearchedRepoPageState();
@@ -15,7 +15,7 @@ class _SearchedRepoPageState extends ConsumerState<SearchedRepoPage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ref
           .read(searchedReposNotifierProvider.notifier)
           .getNextSearchedReposPage(widget.query);

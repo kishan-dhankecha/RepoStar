@@ -15,7 +15,7 @@ import 'package:webview_flutter/webview_flutter.dart';
 
 class ReadmePage extends ConsumerStatefulWidget {
   final GithubRepo repo;
-  const ReadmePage({required this.repo, Key? key}) : super(key: key);
+  const ReadmePage({required this.repo, super.key});
   @override
   _ReadmePageState createState() => _ReadmePageState();
 }
@@ -24,7 +24,7 @@ class _ReadmePageState extends ConsumerState<ReadmePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       ref.read(readmeNotifierProvider.notifier).getReadme(widget.repo.fullName);
     });
   }

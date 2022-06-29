@@ -4,10 +4,7 @@ import 'package:repostar/github/repos/core/presentation/paginated_repos_list_vie
 
 class FailureRepoTile extends StatelessWidget {
   final GithubFailure _failure;
-  const FailureRepoTile(
-    this._failure, {
-    Key? key,
-  }) : super(key: key);
+  const FailureRepoTile(this._failure, {super.key});
 
   @override
   Widget build(BuildContext context) {

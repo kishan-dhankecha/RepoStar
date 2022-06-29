@@ -10,7 +10,7 @@ import 'package:repostar/github/repos/core/presentation/paginated_repos_list_vie
 import 'package:repostar/search/presentation/search_bar.dart';
 
 class StarredRepoPage extends ConsumerStatefulWidget {
-  const StarredRepoPage({Key? key}) : super(key: key);
+  const StarredRepoPage({super.key});
 
   @override
   _StarredRepoPageState createState() => _StarredRepoPageState();

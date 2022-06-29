@@ -3,7 +3,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class NoResultsDisplay extends StatelessWidget {
   final String message;
-  const NoResultsDisplay(this.message, {Key? key}) : super(key: key);
+  const NoResultsDisplay(this.message, {super.key});
 
   @override
   Widget build(BuildContext context) {

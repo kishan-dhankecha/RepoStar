@@ -8,7 +8,7 @@ import 'package:repostar/auth/shared/providers.dart';
 import 'package:repostar/core/presentation/routes/app_router.gr.dart';
 
 class SignInPage extends ConsumerWidget {
-  const SignInPage({Key? key}) : super(key: key);
+  const SignInPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

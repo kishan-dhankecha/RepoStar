@@ -23,7 +23,7 @@ final initializationProvider = FutureProvider((ref) async {
 });
 
 class AppWidget extends ConsumerWidget {
-  AppWidget({Key? key}) : super(key: key);
+  AppWidget({super.key});
 
   final appRouter = AppRouter();
 

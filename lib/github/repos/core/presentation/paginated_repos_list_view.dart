@@ -16,11 +16,11 @@ class PaginatedReposListView extends ConsumerStatefulWidget {
   final void Function() getNextPage;
   final String noResultMessage;
   const PaginatedReposListView({
-    Key? key,
+    super.key,
     required this.getNextPage,
     required this.noResultMessage,
     required this.paginatedReposNotifierProvider,
-  }) : super(key: key);
+  });
 
   @override
   _PaginatedReposListViewState createState() {

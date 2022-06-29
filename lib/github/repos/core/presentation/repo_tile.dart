@@ -6,7 +6,7 @@ import 'package:repostar/github/core/domain/github_repo.dart';
 
 class RepoTile extends StatelessWidget {
   final GithubRepo repo;
-  const RepoTile({Key? key, required this.repo}) : super(key: key);
+  const RepoTile({super.key, required this.repo});
 
   @override
   Widget build(BuildContext context) {
